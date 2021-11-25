@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Quiz_App</string>
+    <string name="falseString">False</string>
+    <string name="trueString">True</string>
+    <string name="Question1">Toronto is the capital city of Canada</string>
+    <string name="Question2">Ottawa is the capital city of Canada</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
