@@ -13,24 +13,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+<!--
         <androidx.fragment.app.FragmentContainerView android:id="@+id/ques_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="my.first.quiz_app.ques_fragment"
             tools:layout="@layout/fragment_ques_fragment" />
-
+-->
     </FrameLayout>
     <Button android:id="@+id/true_button"
+        android:tag="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
         android:text="@string/trueString"
+        android:onClick="ButtonClicked"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/false_button"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container"/>
 
     <Button android:id="@+id/false_button"
+        android:tag="false"
+        android:onClick="ButtonClicked"
         android:layout_width="wrap_content"
+        android:layout_marginTop="20sp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/true_button"
         app:layout_constraintEnd_toEndOf="parent"
