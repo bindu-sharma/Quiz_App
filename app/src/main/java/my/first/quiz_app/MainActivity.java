@@ -3,9 +3,11 @@ package my.first.quiz_app;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ques_fragment fragmentObj;
     Button trueButton;
     Button falseButton;
+    StorageManager storageObject = new StorageManager();
 
     public void UpdateFragment(int qId, int colorId) {
 
@@ -72,27 +75,32 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+         super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.average:{
+                String message = storageObject.GetData(MainActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Hello");
+                 System.out.println("Average Button Pressed ******");
+                System.out.println(message);
+                break;
+            }
+            case R.id.reset_data:{
+                storageObject.ResetData(MainActivity.this);
+                break;
+            }
+        }
+        return true;
+    }
 
-//    public void TrueButtonClicked(View view) {
-//
-//        Button TrueButton;
-//        TrueButton = (Button) findViewById(R.id.true_button);
-//        TrueButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                index++;
-//                QuestionId = obj.questionList.get(index).question;
-//                ColorId = obj.questionList.get(index).color;
-//                System.out.println("****Button Clicked*****");
-//                UpdateFragment(QuestionId, ColorId);
-//                // if()
-//
-//            }
-//        });
-//
-//    }
     Boolean tag;
     int totalScore;
+    int averageScore;
+    int attempts = 1;
+    String getAverageDialogString;
+
 
     public void ButtonClicked(View view) {
         if (index < obj.questionList.size()-1) {
@@ -124,11 +132,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Your Scores are"+ "\t" + totalScore +"\t"+ "out of 10 !!");
-            builder.setPositiveButton("Save", null);
-            builder.setNegativeButton("Cancel",null);
+            averageScore = averageScore+totalScore;
+            getAverageDialogString = totalScore +"/" + 10 + "#";
+            builder.setPositiveButton("Save", (dialogInterface, i) -> storageObject.SaveData
+                    (MainActivity.this,getAverageDialogString));
+
+           // builder.setPositiveButton("Save", null);
+            builder.setNegativeButton("Ignore",null);
             // Create the Alert dialog
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+            index = 0;
+            UpdateFragment(obj.questionList.get(index).question,obj.questionList.get(index).color);
 
 
         }
