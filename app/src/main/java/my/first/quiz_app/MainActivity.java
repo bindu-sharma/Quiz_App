@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         QuestionId = obj.questionList.get(index).question;
-        ColorId = obj.questionList.get(index).color;
+        ColorId = obj.colorList.get(index);
         UpdateFragment(QuestionId, ColorId);
 
         trueButton = (Button) findViewById(R.id.true_button);
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
             index++;
             QuestionId = obj.questionList.get(index).question;
-            ColorId = obj.questionList.get(index).color;
+            ColorId = obj.colorList.get(index);
             System.out.println("****Button Clicked*****");
 
             UpdateFragment(QuestionId, ColorId);
@@ -158,7 +158,8 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
             index = 0;
             Collections.shuffle(obj.questionList);
-            UpdateFragment(obj.questionList.get(index).question,obj.questionList.get(index).color);
+            Collections.shuffle(obj.colorList);
+            UpdateFragment(obj.questionList.get(index).question,obj.colorList.get(index));
 
 
         }
