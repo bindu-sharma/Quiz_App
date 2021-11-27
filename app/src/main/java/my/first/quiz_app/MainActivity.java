@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.findFragmentById(R.id.fragment_container);
         fragmentObj = ques_fragment.newInstance(qId, colorId);
-        manager.beginTransaction().add(R.id.fragment_container, fragmentObj).commit();
+        manager.beginTransaction().replace(R.id.fragment_container, fragmentObj).commit();
 
 
     }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     int totalScore;
 
     public void ButtonClicked(View view) {
-        if (index < 9) {
+        if (index < obj.questionList.size()-1) {
             if(trueButton.isPressed()){
                 tag = true;
                 System.out.println(tag);
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
             if(tag==obj.questionList.get(index).answer){
                 totalScore++;
+                Toast.makeText(this, "Your answer is correct", Toast.LENGTH_SHORT).show();
+            }
+            if(tag!=obj.questionList.get(index).answer) {
+                Toast.makeText(this, "Your answer is incorrect", Toast.LENGTH_SHORT).show();
             }
             System.out.println("*** Total Score ****" + totalScore);
 
@@ -119,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Your Scores are"+ "\t" + totalScore +"\t"+ "out of 10 !!");
-            builder.setPositiveButton("OK", null);
+            builder.setPositiveButton("Save", null);
+            builder.setNegativeButton("Cancel",null);
             // Create the Alert dialog
             AlertDialog alertDialog = builder.create();
             alertDialog.show();

@@ -40,9 +40,9 @@ public class ques_fragment extends Fragment {
        // quesText.setText(mainObj.QuestionId);
        // quesText.setBackgroundColor(mainObj.ColorId);
         question = getArguments().getInt("QuestionId");
-      //  color = getArguments().getInt("ColorId");
+        color = getArguments().getInt("ColorId");
         quesText.setText(question);
-        //quesText.setBackgroundColor(color);
+        quesText.setBackgroundResource(color);
         //System.out.println(color);
 
         return view;

@@ -9,5 +9,8 @@ public class Question {
         this.question = question;
         this.color = color;
         this.answer = answer;
+
+
     }
+
 }
