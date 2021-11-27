@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -82,9 +83,14 @@ public class MainActivity extends AppCompatActivity {
          super.onOptionsItemSelected(item);
         switch (item.getItemId()){
             case R.id.average:{
-
+                String message = storageObject.GetData(MainActivity.this);
+                System.out.println(message);
+                System.out.println("Average Button Pressed ******");
                 int attemptCount = storageObject.CountNumberOfAttempts();
+                System.out.println("Attempts = "+attemptCount);
+
                 int totalAverage = storageObject.CountAverageScore();
+                System.out.println("Average Score = "+totalAverage);
 
                 String dialogMessage = "Your correct answers are " + totalAverage
                                         + " in " + attemptCount + " attempts";
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK",null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
                 break;
             }
             case R.id.reset_data:{
@@ -150,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
             index = 0;
+            Collections.shuffle(obj.questionList);
             UpdateFragment(obj.questionList.get(index).question,obj.questionList.get(index).color);
 
 
