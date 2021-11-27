@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     Button falseButton;
     StorageManager storageObject = new StorageManager();
 
+    int attempts = 0;
+    int averageScore;
+
     public void UpdateFragment(int qId, int colorId) {
 
         FragmentManager manager = getSupportFragmentManager();
@@ -56,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         QuestionId = obj.questionList.get(index).question;
         ColorId = obj.questionList.get(index).color;
         UpdateFragment(QuestionId, ColorId);
-        // index++;
 
         trueButton = (Button) findViewById(R.id.true_button);
         falseButton = (Button) findViewById(R.id.false_button);
@@ -80,11 +82,18 @@ public class MainActivity extends AppCompatActivity {
          super.onOptionsItemSelected(item);
         switch (item.getItemId()){
             case R.id.average:{
-                String message = storageObject.GetData(MainActivity.this);
+
+                int attemptCount = storageObject.CountNumberOfAttempts();
+                int totalAverage = storageObject.CountAverageScore();
+
+                String dialogMessage = "Your correct answers are " + totalAverage
+                                        + " in " + attemptCount + " attempts";
+                System.out.println(dialogMessage);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Hello");
-                 System.out.println("Average Button Pressed ******");
-                System.out.println(message);
+                builder.setTitle(dialogMessage);
+                builder.setPositiveButton("OK",null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 break;
             }
             case R.id.reset_data:{
@@ -97,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean tag;
     int totalScore;
-    int averageScore;
-    int attempts = 1;
     String getAverageDialogString;
 
 
@@ -132,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Your Scores are"+ "\t" + totalScore +"\t"+ "out of 10 !!");
-            averageScore = averageScore+totalScore;
             getAverageDialogString = totalScore +"/" + 10 + "#";
             builder.setPositiveButton("Save", (dialogInterface, i) -> storageObject.SaveData
                     (MainActivity.this,getAverageDialogString));
+            totalScore=0;
 
            // builder.setPositiveButton("Save", null);
             builder.setNegativeButton("Ignore",null);
