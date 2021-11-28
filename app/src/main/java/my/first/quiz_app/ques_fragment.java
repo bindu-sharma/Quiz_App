@@ -1,20 +1,13 @@
 package my.first.quiz_app;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 public class ques_fragment extends Fragment {
-    QuestionBank obj = new QuestionBank();
     TextView quesText;
     int question;
     int color;
@@ -35,16 +28,10 @@ public class ques_fragment extends Fragment {
       //   Inflate the layout for this fragment
        View view=  inflater.inflate(R.layout.fragment_ques_fragment, container, false);
         quesText = (TextView) view.findViewById(R.id.quesText);
-//        quesText.setText(obj.questionList.get(index).question);
-//        index++;
-       // quesText.setText(mainObj.QuestionId);
-       // quesText.setBackgroundColor(mainObj.ColorId);
         question = getArguments().getInt("QuestionId");
         color = getArguments().getInt("ColorId");
         quesText.setText(question);
         quesText.setBackgroundResource(color);
-        //System.out.println(color);
-
         return view;
     }
     

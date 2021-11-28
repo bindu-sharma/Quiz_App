@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
     Button falseButton;
     StorageManager storageObject = new StorageManager();
     ProgressBar simpleProgressBar;
+    Boolean tag;
+    int totalScore;
+    String getAverageDialogString;
+//    int attemptCount;
+//    int totalAverage;
 
 
     public void UpdateFragment(int qId, int colorId) {
@@ -32,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         manager.findFragmentById(R.id.fragment_container);
         fragmentObj = ques_fragment.newInstance(qId, colorId);
         manager.beginTransaction().replace(R.id.fragment_container, fragmentObj).commit();
-
-
     }
 
     @Override
@@ -41,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Getting the saved state
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt("QuestionIndex");
         }
-
 
         QuestionId = obj.questionList.get(index).question;
         ColorId = obj.colorList.get(index);
@@ -55,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         simpleProgressBar=(ProgressBar)findViewById(R.id.simpleProgressBar); // initiate the progress bar
         simpleProgressBar.setMax(100); // 100 maximum value for the progress value
-        simpleProgressBar.setProgress(0); // 50 default progress value for the progress bar
+        simpleProgressBar.setProgress(0); // 0 default progress value for the progress bar
     }
+
+    //Saving the state
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -75,24 +80,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
          super.onOptionsItemSelected(item);
         switch (item.getItemId()){
-            case R.id.average:{
+            case R.id.average: {
                 String message = storageObject.GetData(MainActivity.this);
-                int attemptCount = storageObject.CountNumberOfAttempts();
+                    int attemptCount = storageObject.CountNumberOfAttempts();
+                    int totalAverage = storageObject.CountAverageScore();
+                    System.out.println("Average Score = " + totalAverage);
+                    String dialogMessage = "Your correct answers are " + totalAverage
+                            + " in " + attemptCount + " attempts !!"; //String to display in dialog box
+                    System.out.println(dialogMessage);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle(dialogMessage);
+                    builder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    break;
+                }
 
-                int totalAverage = storageObject.CountAverageScore();
-                System.out.println("Average Score = "+totalAverage);
-                String dialogMessage = "Your correct answers are " + totalAverage
-                                        + " in " + attemptCount + " attempts !!";
-                System.out.println(dialogMessage);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(dialogMessage);
-                builder.setPositiveButton("OK",null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-                break;
-            }
             case R.id.reset_data:{
                 storageObject.ResetData(MainActivity.this);
                 break;
@@ -101,13 +105,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    Boolean tag;
-    int totalScore;
-    String getAverageDialogString;
-
-
+    // Function for True/False button click
     public void ButtonClicked(View view) {
-
         if (index < obj.questionList.size()-1) {
             if(trueButton.isPressed()){
                 tag = true;
@@ -116,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 tag = false;
             }
 
-            if(tag==obj.questionList.get(index).answer){
+            if(tag==obj.questionList.get(index).answer){// Checking if answer is correct or incorrect
                 totalScore++;
-                Toast.makeText(this, "Your answer is correct", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.CorrectAnswer, Toast.LENGTH_SHORT).show();
             }
             if(tag!=obj.questionList.get(index).answer) {
-                Toast.makeText(this, "Your answer is incorrect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.IncorrectAnswer, Toast.LENGTH_SHORT).show();
             }
             System.out.println("*** Total Score ****" + totalScore);
 
@@ -141,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("Save", (dialogInterface, i) -> storageObject.SaveData
                     (MainActivity.this,getAverageDialogString));
             totalScore=0;
-
-           // builder.setPositiveButton("Save", null);
             builder.setNegativeButton("Ignore",null);
             // Create the Alert dialog
             AlertDialog alertDialog = builder.create();
@@ -152,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
             Collections.shuffle(obj.colorList);
             UpdateFragment(obj.questionList.get(index).question,obj.colorList.get(index));
             simpleProgressBar.setProgress(0);
-
-
         }
     }
 }

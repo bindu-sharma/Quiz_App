@@ -12,7 +12,8 @@
     <string name="Question8">Victoria is the capital city of British Columbia</string>
     <string name="Question9">There are 10 provinces in Canada</string>
     <string name="Question10">There are 4 territories in Canada</string>
-
+    <string name="CorrectAnswer">Your answer is correct</string>
+    <string name="IncorrectAnswer">Your answer is incorrect</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="get_the_average">Get The Average</string>
