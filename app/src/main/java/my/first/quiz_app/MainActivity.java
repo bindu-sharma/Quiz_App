@@ -88,16 +88,13 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.average:{
                 String message = storageObject.GetData(MainActivity.this);
-                System.out.println(message);
-                System.out.println("Average Button Pressed ******");
                 int attemptCount = storageObject.CountNumberOfAttempts();
-                System.out.println("Attempts = "+attemptCount);
+
 
                 int totalAverage = storageObject.CountAverageScore();
                 System.out.println("Average Score = "+totalAverage);
-
                 String dialogMessage = "Your correct answers are " + totalAverage
-                                        + " in " + attemptCount + " attempts";
+                                        + " in " + attemptCount + " attempts !!";
                 System.out.println(dialogMessage);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(dialogMessage);
