@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Button trueButton;
     Button falseButton;
     StorageManager storageObject = new StorageManager();
+    ProgressBar simpleProgressBar;
 
-    int attempts = 0;
-    int averageScore;
 
     public void UpdateFragment(int qId, int colorId) {
 
@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         trueButton = (Button) findViewById(R.id.true_button);
         falseButton = (Button) findViewById(R.id.false_button);
+
+        simpleProgressBar=(ProgressBar)findViewById(R.id.simpleProgressBar); // initiate the progress bar
+        simpleProgressBar.setMax(100); // 100 maximum value for the progress value
+        simpleProgressBar.setProgress(0); // 50 default progress value for the progress bar
     }
 
     @Override
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ButtonClicked(View view) {
+
         if (index < obj.questionList.size()-1) {
             if(trueButton.isPressed()){
                 tag = true;
@@ -141,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("****Button Clicked*****");
 
             UpdateFragment(QuestionId, ColorId);
+            simpleProgressBar.setProgress(simpleProgressBar.getProgress()+10);
 
 
         } else {
@@ -160,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             Collections.shuffle(obj.questionList);
             Collections.shuffle(obj.colorList);
             UpdateFragment(obj.questionList.get(index).question,obj.colorList.get(index));
+            simpleProgressBar.setProgress(0);
 
 
         }
