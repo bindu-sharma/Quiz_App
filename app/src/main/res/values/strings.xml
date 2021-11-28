@@ -14,7 +14,6 @@
     <string name="Question10">There are 4 territories in Canada</string>
     <string name="CorrectAnswer">Your answer is correct</string>
     <string name="IncorrectAnswer">Your answer is incorrect</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="get_the_average">Get The Average</string>
     <string name="reset_the_saved_result">Reset The Saved Result</string>
